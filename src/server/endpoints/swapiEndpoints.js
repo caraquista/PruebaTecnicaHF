@@ -1,11 +1,10 @@
 
 const _isWookieeFormat = (req) => {
-    if(req.query.format && req.query.format == 'wookiee'){
+    if (req.query.format && req.query.format === 'wookiee') {
         return true;
     }
     return false;
-}
-
+};
 
 const applySwapiEndpoints = (server, app) => {
 
@@ -26,11 +25,10 @@ const applySwapiEndpoints = (server, app) => {
         res.sendStatus(501);
     });
 
-    server.get('/hfswapi/getLogs',async (req, res) => {
+    server.get('/hfswapi/getLogs', async (req, res) => {
         const data = await app.db.logging.findAll();
         res.send(data);
     });
-
-}
+};
 
 module.exports = applySwapiEndpoints;
