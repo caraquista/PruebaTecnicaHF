@@ -5,8 +5,11 @@ const models = require('./models');
 
 let sequelize;
 
-sequelize = new Sequelize("sqlite::memory:", {
-  logging: false //console.log
+// sequelize = new Sequelize("sqlite::memory:", {
+  sequelize = new Sequelize({
+    dialect: 'sqlite',
+    storage: './database.sqlite',
+    logging: true //console.log
 });
 
 const db = {

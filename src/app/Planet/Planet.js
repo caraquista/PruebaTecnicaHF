@@ -1,6 +1,6 @@
 class Planet {
-    constructor(id){
-        throw new Error('To be implemented');
+    constructor(id) {
+        this.id = id;
     }
 
     async init(){
