@@ -1,21 +1,23 @@
 const {AbstractPeople} = require('./abstractPeople');
 const config = require('../../config');
+const db = require('../db');
+const { genericRequest, getWeightOnPlanet } = require('../swapiFunctions');
 const {Planet} = require('../Planet');
 
 class CommonPeople extends AbstractPeople {
-    constructor(id, app) {
-        super(id, app);
+    constructor(id) {
+        super(id);
     }
 
     async init() {
         let crearRegistro = false;
-        let commonPeople = await this.app.db.swPeople.findOne({
+        let commonPeople = await db.swPeople.findOne({
             where: { id: this.id },
         });
 
         if (commonPeople === null) {
             crearRegistro = true;
-            commonPeople = await this.app.swapiFunctions.genericRequest(
+            commonPeople = await genericRequest(
                 `${config.url_external_service}${config.prefix_person}${this.id}`,
                 'GET',
                 null,
@@ -38,7 +40,7 @@ class CommonPeople extends AbstractPeople {
         this.name = commonPeople.name;
         this.height = commonPeople.height;
         if (crearRegistro) {
-            await this.app.db.swPeople.create({
+            await db.swPeople.create({
                 id: this.id,
                 name: this.name,
                 height: this.height,
@@ -54,7 +56,7 @@ class CommonPeople extends AbstractPeople {
         await planet.init();
         let mass = 'N/A';
         if (!isNaN(this.getMass()) && !isNaN(planet.getGravity())) {
-            mass = this.app.swapiFunctions.getWeightOnPlanet(this.getMass(), planet.getGravity());
+            mass = getWeightOnPlanet(this.getMass(), planet.getGravity());
         }
         return {
             weightOnPlanet: mass,

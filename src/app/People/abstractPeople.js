@@ -1,10 +1,9 @@
 class AbstractPeople {
 
-    constructor(id, app) {
+    constructor(id) {
         if (this.constructor === AbstractPeople) {
             throw new Error('Abstract classes can\'t be instantiated.');
         }
-        this.app = app;
         this.id = id;
 
     }

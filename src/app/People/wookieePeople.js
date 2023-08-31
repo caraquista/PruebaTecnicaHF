@@ -1,19 +1,21 @@
 const { AbstractPeople } = require('./abstractPeople');
+
+const { genericRequest } = require('../swapiFunctions');
 const config = require('../../config');
 
 class WookieePeople extends AbstractPeople {
-    constructor(id, app) {
-        super(id, app);
+    constructor(id) {
+        super(id);
     }
     async init() {
-        let people = await this.app.swapiFunctions.genericRequest(
+        let people = await genericRequest(
             `${config.url_external_service}${config.prefix_person}${this.id}${config.suffix_wookie}`,
               'GET',
               null,
               config.logging_active
             );
           const idPlanet = parseInt(people.acooscwoohoorcanwa.replace(/\D+/g, ''), 10);
-          const planet = await this.app.swapiFunctions.genericRequest(
+          const planet = await genericRequest(
             `${config.url_external_service}${config.prefix_planet}${idPlanet}${config.suffix_wookie}`,
             'GET',
             null,
