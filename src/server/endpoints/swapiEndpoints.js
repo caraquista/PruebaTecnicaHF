@@ -1,4 +1,5 @@
 const { Planet } = require('../../app/Planet/');
+const {peopleFactory} = require('../../app/People');
 
 const _isWookieeFormat = (req) => {
     if (req.query.format && req.query.format === 'wookiee') {
@@ -15,7 +16,20 @@ const applySwapiEndpoints = (server, app) => {
     });
 
     server.get('/hfswapi/getPeople/:id', async (req, res) => {
-        res.sendStatus(501);
+        try {
+            let id = req.params.id;
+            let lang = (_isWookieeFormat(req)) ? 'wookie' : 'imperial';
+            const person = await peopleFactory(id, lang, app);
+            res.send({
+                name: person.getName(),
+                height: person.getHeight(),
+                mass: person.getMass(),
+                homeworldName: person.getHomeworldName(),
+                homeworldId: person.getHomeworlId(),
+            });
+        } catch (err) {
+            res.sendStatus(500, err);
+        }
     });
 
     server.get('/hfswapi/getPlanet/:id', async (req, res) => {

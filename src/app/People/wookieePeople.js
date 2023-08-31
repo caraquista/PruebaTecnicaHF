@@ -1,6 +1,10 @@
-const AbstractPeople = require('./abstractPeople');
-export class WookieePeople extends AbstractPeople {
-    constructor(id, db) {
-        super(id, db);
+const {AbstractPeople} = require('./abstractPeople');
+
+class WookieePeople extends AbstractPeople {
+    constructor(id, app) {
+        super(id, app);
     }
 }
+
+exports.WookieePeople = WookieePeople;
+

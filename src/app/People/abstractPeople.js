@@ -1,10 +1,10 @@
-export class AbstractPeople {
+class AbstractPeople {
 
-    constructor(id, db) {
+    constructor(id, app) {
         if (this.constructor === AbstractPeople) {
             throw new Error('Abstract classes can\'t be instantiated.');
         }
-        this.db = db;
+        this.app = app;
         this.id = id;
 
     }
@@ -41,3 +41,5 @@ export class AbstractPeople {
         throw new Error('To be implemented');
     }
 }
+
+exports.AbstractPeople = AbstractPeople;
