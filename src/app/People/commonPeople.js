@@ -21,19 +21,22 @@ class CommonPeople extends AbstractPeople {
                 null,
                 config.logging_active
             );
-            const planetId = parseInt(commonPeople.homeworld.replace(/\D+/g, ''), 10);
-            const planet = new Planet(planetId, this.app);
-            await planet.init();
+            if (commonPeople.detail !== 'Not found') {
+                const planetId = parseInt(commonPeople.homeworld.replace(/\D+/g, ''), 10);
+                const planet = new Planet(planetId, this.app);
+                await planet.init();
 
-            this.homeworld_id = planetId;
-            this.homeworld_name = planet.name;
+                this.homeworld_id = planetId;
+                this.homeworld_name = planet.name;
+                this.mass = parseFloat(commonPeople.mass.replace(/\D+/g, ''))?.toFixed(2) || 0.0;
+            }
         } else {
+            this.mass = commonPeople.mass;
             this.homeworld_id = commonPeople.homeworld_id;
             this.homeworld_name = commonPeople.homeworld_name;
         }
         this.name = commonPeople.name;
         this.height = commonPeople.height;
-        this.mass = commonPeople.mass;
         if (crearRegistro) {
             await this.app.db.swPeople.create({
                 id: this.id,

@@ -5,5 +5,6 @@ module.exports = {
   url_external_service: process.env.URL_EXTERNAL_SERVICE,
   prefix_person: process.env.PREFIX_PERSON,
   prefix_planet: process.env.PREFIX_PLANET,
-  suffix_wookie: process.env.SUFFIX_WOOKIE
+  suffix_wookie: process.env.SUFFIX_WOOKIE,
+  max_random_number: process.env.MAX_RANDOM_NUMBER
 };

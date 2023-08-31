@@ -1,5 +1,6 @@
 const { Planet } = require('../../app/Planet/');
 const {peopleFactory} = require('../../app/People');
+const config = require('../../config');
 
 const _isWookieeFormat = (req) => {
     if (req.query.format && req.query.format === 'wookiee') {
@@ -28,7 +29,6 @@ const applySwapiEndpoints = (server, app) => {
                 homeworldId: person.getHomeworlId(),
             });
         } catch (err) {
-            console.error(err);
             res.sendStatus(500, err);
         }
     });
@@ -48,7 +48,37 @@ const applySwapiEndpoints = (server, app) => {
     });
 
     server.get('/hfswapi/getWeightOnPlanetRandom', async (req, res) => {
-        res.sendStatus(501);
+        try {
+            let idPerson = parseInt(Math.floor((Math.random() * config.max_random_number) + 1), 10);
+            let idPlanet = parseInt(Math.floor((Math.random() * config.max_random_number) + 1), 10);
+            const person = await peopleFactory(idPerson, '', app);
+            if (person.getHomeworlId() === idPlanet) {
+                res.sendStatus(409, 'No se puede calcular el peso de una persona en su pais natal.');
+            } else {
+                const planet = new Planet(idPlanet, app);
+                await planet.init();
+                let mass = 'N/A';
+                if (!isNaN(person.getMass()) && !isNaN(planet.getGravity())) {
+                    mass = app.swapiFunctions.getWeightOnPlanet(person.getMass(), planet.getGravity());
+                }
+                res.send({
+                    weightOnPlanet: mass,
+                    person: {
+                        name: person.getName(),
+                        height: person.getHeight(),
+                        mass: person.getMass(),
+                        homeworldName: person.getHomeworldName(),
+                        homeworldId: person.getHomeworlId()
+                    },
+                    planet: {
+                        name: planet.getName(),
+                        gravity: planet.getGravity()
+                    }
+                });
+            }
+        } catch (err) {
+            res.sendStatus(500, err);
+        }
     });
 
     server.get('/hfswapi/getLogs', async (req, res) => {
