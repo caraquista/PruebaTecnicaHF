@@ -6,6 +6,8 @@ const createServer = require('./server');
 
 const app = require('./app');
 
+const config = require('./config');
+
 async function start() {
 	const server = await createServer(app);
 
@@ -14,7 +16,7 @@ async function start() {
   });
 
 	// Start the GraphQL server
-  const port = process.env.PORT || 4567;
+  const port = config.port || 4567;
 	server.listen(port , () => {
 		// eslint-disable-next-line no-console
 		console.log(`Server is running on port: ${port}`);

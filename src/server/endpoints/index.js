@@ -1,7 +1,7 @@
 const applySwapiEndpoints = require('./swapiEndpoints');
 
-const applyEndpoints = (server, app) => {
-	applySwapiEndpoints(server, app);
+const applyEndpoints = async (server, app) => {
+	await applySwapiEndpoints(server, app);
 	return server;
 };
 

@@ -6,7 +6,7 @@ const models = require('./models');
 let sequelize;
 
 sequelize = new Sequelize("sqlite::memory:", {
-  logging: false //console.log
+    logging: true //console.log
 });
 
 const db = {
@@ -48,7 +48,7 @@ const populateDB = async () => {
       height: 172,
       mass: 77,
       homeworld_name: "Tatooine",
-      homeworld_id: "/planets/1"
+      homeworld_id: 1
     }
   ]);
 }

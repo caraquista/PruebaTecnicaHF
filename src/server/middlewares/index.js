@@ -1,7 +1,7 @@
 const loggingMiddleware = require('./loggingMiddleware');
 
-const applyMiddlwares = (server, app) => {
-    server.use(loggingMiddleware(app.db));
+const applyMiddlwares = async (server, app) => {
+    await server.use(loggingMiddleware(app.db));
 	return server;
 };
 
