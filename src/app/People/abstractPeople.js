@@ -38,7 +38,7 @@ class AbstractPeople {
     }
 
     getWeightOnPlanet(planetId) {
-        throw new Error('To be implemented');
+        throw new Error('To be implemented', planetId);
     }
 }
 
