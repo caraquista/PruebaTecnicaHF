@@ -36,13 +36,14 @@ const applySwapiEndpoints = (server, app) => {
     server.get('/hfswapi/getPlanet/:id', async (req, res) => {
         try {
             let id = req.params.id;
-            const planet = new Planet(id, app);
+            const planet = new Planet(id);
             await planet.init();
             res.send({
                 name: planet.getName(),
                 gravity: planet.getGravity(),
             });
         } catch (err) {
+            console.error(err);
             res.sendStatus(500, err);
         }
     });

@@ -1,20 +1,21 @@
 const config = require('../../config');
+const db = require('../db');
+const { genericRequest } = require('../swapiFunctions');
 
 class Planet {
-    constructor(id, app) {
+    constructor(id) {
         this.id = id;
-        this.app = app;
     }
 
     async init() {
         let crearRegistro = false;
-        let planet = await this.app.db.swPlanet.findOne({
+        let planet = await db.swPlanet.findOne({
           where: { id: this.id },
         });
 
         if (planet === null) {
             crearRegistro = true;
-            planet = await this.app.swapiFunctions.genericRequest(
+            planet = await genericRequest(
                 `${config.url_external_service}${config.prefix_planet}${this.id}`,
                 'GET',
                 null,
@@ -27,7 +28,7 @@ class Planet {
         this.name = planet.name;
 
         if (crearRegistro) {
-            await this.app.db.swPlanet.create({
+            await db.swPlanet.create({
                 id: this.id,
                 name: this.name,
                 gravity: this.gravity

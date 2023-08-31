@@ -23,7 +23,7 @@ class CommonPeople extends AbstractPeople {
             );
             if (commonPeople.detail !== 'Not found') {
                 const planetId = parseInt(commonPeople.homeworld.replace(/\D+/g, ''), 10);
-                const planet = new Planet(planetId, this.app);
+                const planet = new Planet(planetId);
                 await planet.init();
 
                 this.homeworld_id = planetId;
@@ -50,7 +50,7 @@ class CommonPeople extends AbstractPeople {
     }
 
     async getWeightOnPlanet(planetId) {
-        const planet = new Planet(planetId, this.app);
+        const planet = new Planet(planetId);
         await planet.init();
         let mass = 'N/A';
         if (!isNaN(this.getMass()) && !isNaN(planet.getGravity())) {
