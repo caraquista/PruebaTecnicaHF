@@ -1,11 +1,12 @@
 const express = require('express');
 const applyEndpoints = require('./endpoints');
 const applyMiddlewares = require('./middlewares');
+const server = express();
 
 const createExpressServer = async app => {
-	const server = express();
-	applyMiddlewares(server, app);
-	applyEndpoints(server, app);
+	
+	await applyMiddlewares(server, app);
+	await applyEndpoints(server, app);
     
     await app.db.initDB();
 	await app.db.populateDB();
@@ -21,4 +22,7 @@ const createExpressServer = async app => {
 	return server;
 };
 
-module.exports = createExpressServer;
+module.exports = {
+	createExpressServer,
+	server
+};

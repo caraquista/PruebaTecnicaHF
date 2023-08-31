@@ -17,7 +17,7 @@
     "start": "node index.js",
     "dev": "nodemon --watch ./src index.js",
     "lint": "./node_modules/.bin/eslint --ext .js .",
-    "test": "sh -ac 'jest --coverage --detectOpenHandles ---testTimeout=30000 --verbose --forceExit --maxWorkers=1 --maxConcurrency=1'"
+    "test": ". .env_test; sh -ac 'jest --coverage --detectOpenHandles ---testTimeout=30000 --verbose --forceExit --maxWorkers=1 --maxConcurrency=1'"
   },
   "devDependencies": {
     "eslint": "^8.48.0",
