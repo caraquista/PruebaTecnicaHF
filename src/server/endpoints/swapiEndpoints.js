@@ -55,24 +55,15 @@ const applySwapiEndpoints = (server, app) => {
             if (person.getHomeworlId() === idPlanet) {
                 res.sendStatus(409, 'No se puede calcular el peso de una persona en su pais natal.');
             } else {
-                const planet = new Planet(idPlanet, app);
-                await planet.init();
-                let mass = 'N/A';
-                if (!isNaN(person.getMass()) && !isNaN(planet.getGravity())) {
-                    mass = app.swapiFunctions.getWeightOnPlanet(person.getMass(), planet.getGravity());
-                }
+                const mass = await person.getWeightOnPlanet(idPlanet);
                 res.send({
-                    weightOnPlanet: mass,
+                    ...mass,
                     person: {
                         name: person.getName(),
                         height: person.getHeight(),
                         mass: person.getMass(),
                         homeworldName: person.getHomeworldName(),
                         homeworldId: person.getHomeworlId()
-                    },
-                    planet: {
-                        name: planet.getName(),
-                        gravity: planet.getGravity()
                     }
                 });
             }

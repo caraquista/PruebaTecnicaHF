@@ -48,6 +48,22 @@ class CommonPeople extends AbstractPeople {
             });
         }
     }
+
+    async getWeightOnPlanet(planetId) {
+        const planet = new Planet(planetId, this.app);
+        await planet.init();
+        let mass = 'N/A';
+        if (!isNaN(this.getMass()) && !isNaN(planet.getGravity())) {
+            mass = this.app.swapiFunctions.getWeightOnPlanet(this.getMass(), planet.getGravity());
+        }
+        return {
+            weightOnPlanet: mass,
+            planet: {
+                name: planet.getName(),
+                gravity: planet.getGravity()
+            }
+        };
+    }
 }
 
 exports.CommonPeople = CommonPeople;
