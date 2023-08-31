@@ -1,6 +1,7 @@
 const {AbstractPeople} = require('./abstractPeople');
 const config = require('../../config');
 const {Planet} = require('../Planet');
+
 class CommonPeople extends AbstractPeople {
     constructor(id, app) {
         super(id, app);
@@ -24,11 +25,11 @@ class CommonPeople extends AbstractPeople {
             const planet = new Planet(planetId, this.app);
             await planet.init();
 
-            this.homeworlId = planetId;
-            this.homeworldName = planet.name;
+            this.homeworld_id = planetId;
+            this.homeworld_name = planet.name;
         } else {
-            this.homeworlId = commonPeople.homeworlId;
-            this.homeworldName = commonPeople.homeworldName;
+            this.homeworld_id = commonPeople.homeworld_id;
+            this.homeworld_name = commonPeople.homeworld_name;
         }
         this.name = commonPeople.name;
         this.height = commonPeople.height;
@@ -39,8 +40,8 @@ class CommonPeople extends AbstractPeople {
                 name: this.name,
                 height: this.height,
                 mass: this.mass,
-                homeworlId: this.homeworlId,
-                homeworldName: this.homeworldName
+                homeworld_id: this.homeworld_id,
+                homeworld_name: this.homeworld_name
             });
         }
     }

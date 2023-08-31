@@ -30,11 +30,11 @@ class AbstractPeople {
     }
 
     getHomeworldName() {
-        return this.homeworldName;
+        return this.homeworld_name;
     }
 
     getHomeworlId() {
-        return this.homeworlId;
+        return this.homeworld_id;
     }
 
     getWeightOnPlanet(planetId) {

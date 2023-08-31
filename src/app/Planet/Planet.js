@@ -17,7 +17,8 @@ class Planet {
             planet = await this.app.swapiFunctions.genericRequest(
                 `${config.url_external_service}${config.prefix_planet}${this.id}`,
                 'GET',
-                null
+                null,
+                config.logging_active
             );
             this.gravity = parseFloat(planet.gravity.replace(/[^\d.]*/g, '')) || 0.0;
         } else {

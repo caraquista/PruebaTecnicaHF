@@ -18,7 +18,7 @@ const applySwapiEndpoints = (server, app) => {
     server.get('/hfswapi/getPeople/:id', async (req, res) => {
         try {
             let id = req.params.id;
-            let lang = (_isWookieeFormat(req)) ? 'wookie' : 'imperial';
+            let lang = (_isWookieeFormat(req)) ? 'wookiee' : 'imperial';
             const person = await peopleFactory(id, lang, app);
             res.send({
                 name: person.getName(),
@@ -28,6 +28,7 @@ const applySwapiEndpoints = (server, app) => {
                 homeworldId: person.getHomeworlId(),
             });
         } catch (err) {
+            console.error(err);
             res.sendStatus(500, err);
         }
     });
