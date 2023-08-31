@@ -1,0 +1,1 @@
+logInfo('Validator don\'t need for now');
